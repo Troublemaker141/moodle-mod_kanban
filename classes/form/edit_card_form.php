@@ -109,10 +109,36 @@ class edit_card_form extends dynamic_form {
         $mform->addHelpButton('repeatgroup', 'repeat', 'kanban');
 
         $mform->addElement('filemanager', 'attachments', get_string('attachments', 'kanban'));
+		
+		// --- Änderung Farbauswahl - Tony Thomas - 16.01.25
+		// Array mit festen Farben definieren.
+		$colors = [
+			'#ffcccc' => 'Rot (Hell)',
+			'#CE0000' => 'Rot (Dunkel)',
+			'#8CCFFF' => 'Blau (Hell)',
+			'#0094FF' => 'Blau (Dunkel)',
+			'#ccffcc' => 'Grün (Hell)',
+			'#00C116' => 'Grün (Dunkel)',
+			'#ffedcc' => 'Orange (Hell)',
+			'#ff8c00' => 'Orange (Dunkel)',
+			'#ffffcc' => 'Gelb (Hell)',
+			'#ffd700' => 'Gelb (Dunkel)',
+			'#ffffff' => 'Weiß',
+			'#dddddd' => 'Grau',
+		];
 
-        $mform->addElement('color', 'color', get_string('color', 'mod_kanban'), ['size' => 5]);
-        $mform->setType('color', PARAM_TEXT);
-        $mform->setDefault('color', '#ffffff');
+		// Für die Anzeige jedes Eintrags ein kleines Farbfeld erzeugen:
+		$coloroptions = [];
+		foreach ($colors as $hex => $label) {
+			$coloroptions[$hex] = $label;
+		}
+
+		// Feste Farbauswahl als Select-Element hinzufügen.
+		$mform->addElement('select', 'color', get_string('color', 'mod_kanban'), $coloroptions);
+		$mform->setType('color', PARAM_TEXT);
+		//Standardwert einstellen
+		$mform->setDefault('color', '#ffffff');
+		// --- Ene Anpassung
     }
 
     /**
